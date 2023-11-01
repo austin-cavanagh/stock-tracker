@@ -1,34 +1,26 @@
 import pandas as pd
-import yfinance as yf
+from yahooquery import Ticker
 
-fake = yf.Ticker('aapl')
+company = 'AAPL'
 
-data = fake.history(period='1mo')
+ticker = Ticker(company)
 
-if data.empty:
-    print('fake')
-else:
-    print('real')
+# Fetching company asset profile
+company_profile = ticker.asset_profile[company]
 
-print(data)
+# Fetching financial statements
+income_statement = ticker.income_statement()
+cash_flow_statement = ticker.cash_flow()
+balance_sheet = ticker.balance_sheet()
 
-# institutional_holders = msft.institutional_holders
+# Fetching historical stock data
+one_day = ticker.history(period='1d', interval='1m')
+five_day = ticker.history(period='5d', interval='5m')
+one_month = ticker.history(period='1mo', interval='15m')
+six_month = ticker.history(period='6mo', interval='1h')
+one_year = ticker.history(period='1y', interval='1d')
+five_year = ticker.history(period='5y', interval='1d')
+max_data = ticker.history(period='max', interval='1wk')
 
-# balance_sheet = msft.balance_sheet
-# income_statement = appl.income_stmt
-# cash_flow_statment = appl.cash_flow
-
-# one_day = msft.history(period='1d', interval='1m')
-# 382
-# five_day = msft.history(period='5d', interval='5m')
-# 390
-# one_month = msft.history(period='1mo', interval='15m') 
-# 572
-# six_month = msft.history(period='6mo', interval='1h')
-# 892
-# one_year = msft.history(period='1y', interval='1d')
-# 251
-# five_year = msft.history(period='5y', interval='1d')
-# 1257
-# max = msft.history(period='max', interval='1wk')
-# 1965
+# Fetching institutional ownership data
+institutional_holders = ticker.institution_ownership
