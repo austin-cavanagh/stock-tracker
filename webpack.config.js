@@ -2,7 +2,7 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/src/index.js',
+  entry: './client/index.js',
 
   output: {
     path: path.join(__dirname, '/dist'),
@@ -11,7 +11,7 @@ module.exports = {
 
   plugins: [
     new HTMLWebpackPlugin({
-      template: './client/src/index.html',
+      template: './client/index.html',
     }),
   ],
 
@@ -27,6 +27,16 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
+  },
+
+  devServer: {
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
   },
 };
