@@ -27,7 +27,7 @@ app.get('/fetch-data', (req, res) => {
       return res.status(500).send('Python Error');
     }
 
-    // standazrd output: output of fetch_data.py
+    // standard output: output of fetch_data.py
     // turn json into js
     res.json(JSON.parse(stdout));
   });
