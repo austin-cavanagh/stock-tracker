@@ -18,6 +18,9 @@ app.get('/api/fetch-data', (req, res) => {
 
   exec(
     `python3 server/scripts/fetch_data.py ${ticker}`,
+    {
+      maxBuffer: 1024 * 1024 * 10,
+    },
     (error, stdout, stderr) => {
       if (error) {
         console.error(`Exec Error: ${error}`);
@@ -29,7 +32,8 @@ app.get('/api/fetch-data', (req, res) => {
         return res.status(500).send('Python Error');
       }
 
-      res.json(JSON.parse(stdout));
+      res.setHeader('Content-Type', 'application/json');
+      res.send(stdout);
     }
   );
 });
