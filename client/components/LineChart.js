@@ -1,6 +1,22 @@
 import React from 'react';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
+import {
+  Chart,
+  LinearScale, // y
+  CategoryScale, // x
+  LineController,
+  LineElement,
+  PointElement,
+} from 'chart.js';
+
+Chart.register(
+  LinearScale,
+  CategoryScale,
+  LineController,
+  LineElement,
+  PointElement
+);
 
 const LineChart = ({ chartData }) => {
   const [labels, setLabels] = useState(() => {
@@ -17,7 +33,7 @@ const LineChart = ({ chartData }) => {
     labels: labels,
     datasets: [
       {
-        label: 'Closing Price',
+        label: 'Price',
         data: prices,
         borderColor: '#42A5F5', // you can choose any color you like
         fill: false,
@@ -28,7 +44,9 @@ const LineChart = ({ chartData }) => {
   return (
     <>
       <div>
-        <Line data={data} />
+        <div className="chart">
+          <Line data={data} />
+        </div>
       </div>
     </>
   );
