@@ -4,6 +4,7 @@ import searchIcon from '../assets/search-icon.png';
 import IncomeStatement from './incomeStatement.js';
 import BalanceSheet from './BalanceSheet';
 import CashFlowStatement from './CashFlowStatement';
+import LineChart from './LineChart';
 
 const App = () => {
   const [tickerData, setTickerData] = useState();
@@ -22,8 +23,7 @@ const App = () => {
     }
   };
 
-  console.log(tickerData);
-  // if (tickerData) console.log(tickerData.incomeStatement);
+  // console.log(tickerData);
 
   return (
     <>
@@ -62,7 +62,7 @@ const App = () => {
         </nav>
 
         <div className="content">
-          {tickerData && tickerData.incomeStatement && (
+          {/* {tickerData && tickerData.incomeStatement && (
             <IncomeStatement incomeStatement={tickerData.incomeStatement} />
           )}
           {tickerData && tickerData.balanceSheet && (
@@ -70,6 +70,10 @@ const App = () => {
           )}
           {tickerData && tickerData.cashFlowStatement && (
             <CashFlowStatement balanceSheet={tickerData.cashFlowStatement} />
+          )} */}
+
+          {tickerData && tickerData.oneDayChart && (
+            <LineChart chartData={tickerData.oneDayChart} />
           )}
         </div>
       </div>
