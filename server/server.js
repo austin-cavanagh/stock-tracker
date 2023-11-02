@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { exec } = require('child_process');
 
 const app = express();
 const PORT = 3000;
@@ -12,25 +13,25 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.get('/fetch-data', (req, res) => {
-  // exec() spawns a shell and runs fetch_data.py
-  exec('python ./scripts/fetch_data.py', (error, stdout, stderr) => {
-    // error: if child process fails to execute or returned with non-zero status code
-    if (error) {
-      console.error(`Exec Error: ${error}`);
-      return res.status(500).send('Internal Server Error');
-    }
+app.get('/api/fetch-data', (req, res) => {
+  const ticker = req.query.query;
 
-    // standard error: error and traceback provided by python when function fails
-    if (stderr) {
-      console.error(`Python stderr: ${stderr}`);
-      return res.status(500).send('Python Error');
-    }
+  exec(
+    `python3 server/scripts/fetch_data.py ${ticker}`,
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Exec Error: ${error}`);
+        return res.status(500).send('Internal Server Error');
+      }
 
-    // standard output: output of fetch_data.py
-    // turn json into js
-    res.json(JSON.parse(stdout));
-  });
+      if (stderr) {
+        console.error(`Python stderr: ${stderr}`);
+        return res.status(500).send('Python Error');
+      }
+
+      res.json(JSON.parse(stdout));
+    }
+  );
 });
 
 app.listen(PORT, () => {
