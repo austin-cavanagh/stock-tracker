@@ -48,7 +48,7 @@ body {
   height: auto;
   width: 100%;
   background-color: #001f3f;
-  padding: 8rem 0 2rem 0;
+  padding: 12rem 0 6rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -174,7 +174,16 @@ body {
   text-align: left;
 }
 
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .chart {
-  height: 25rem;
-  width: 50rem;
+  height: 30rem;
+  width: 60rem;
+  background-color: #f4f4f4;
+  padding: 1rem;
 }

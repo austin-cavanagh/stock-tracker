@@ -23,7 +23,7 @@ const App = () => {
     }
   };
 
-  console.log(tickerData);
+  // console.log(tickerData);
 
   return (
     <>

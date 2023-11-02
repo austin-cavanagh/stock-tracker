@@ -35,17 +35,46 @@ const LineChart = ({ chartData }) => {
       {
         label: 'Price',
         data: prices,
-        borderColor: '#42A5F5', // you can choose any color you like
+        borderColor: 'white',
         fill: false,
+        pointRadius: 0,
       },
     ],
   };
 
+  const options = {
+    scales: {
+      y: {
+        ticks: {
+          callback: value => {
+            return '$' + parseInt(value).toLocaleString();
+          },
+          autoSkip: true,
+          maxTicksLimit: 8,
+        },
+        grid: {
+          display: false,
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          autoSkip: true,
+          maxTicksLimit: 8,
+        },
+      },
+      maintainAspectRatio: false,
+    },
+  };
+
   return (
     <>
-      <div>
+      <div className="chart-container">
+        <h2 className="financial-statement-title">Stock Chart</h2>
         <div className="chart">
-          <Line data={data} />
+          <Line data={data} options={options} />
         </div>
       </div>
     </>
