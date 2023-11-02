@@ -31,12 +31,12 @@ ticker = Ticker(ticker_symbol)
 # Fetching historical stock data
 
 one_day = ticker.history(period='1d', interval='1m').reset_index().to_dict(orient='records')
-# five_day = ticker.history(period='5d', interval='5m').reset_index().to_dict(orient='records')
-# one_month = ticker.history(period='1mo', interval='15m').reset_index().to_dict(orient='records')
-# six_month = ticker.history(period='6mo', interval='1h').reset_index().to_dict(orient='records')
-# one_year = ticker.history(period='1y', interval='1d').reset_index().to_dict(orient='records')
-# five_year = ticker.history(period='5y', interval='1d').reset_index().to_dict(orient='records')
-# max_chart = ticker.history(period='max', interval='1wk').reset_index().to_dict(orient='records')
+five_day = ticker.history(period='5d', interval='5m').reset_index().to_dict(orient='records')
+one_month = ticker.history(period='1mo', interval='15m').reset_index().to_dict(orient='records')
+six_month = ticker.history(period='6mo', interval='1h').reset_index().to_dict(orient='records')
+one_year = ticker.history(period='1y', interval='1d').reset_index().to_dict(orient='records')
+five_year = ticker.history(period='5y', interval='1d').reset_index().to_dict(orient='records')
+max_chart = ticker.history(period='max', interval='1wk').reset_index().to_dict(orient='records')
 
 # Consolidate all dictionaries into one
 combined_data = {
@@ -46,12 +46,12 @@ combined_data = {
     # 'balanceSheet': balance_sheet,
     # 'institutionalHolders': institutional_holders,
     'oneDayChart': one_day,
-    # 'fiveDayChart': five_day,
-    # 'oneMonthChart': one_month,
-    # 'sixMonthChart': six_month,
-    # 'oneYearChart': one_year,
-    # 'fiveYearChart': five_year,
-    # 'maxChart': max_chart
+    'fiveDayChart': five_day,
+    'oneMonthChart': one_month,
+    'sixMonthChart': six_month,
+    'oneYearChart': one_year,
+    'fiveYearChart': five_year,
+    'maxChart': max_chart
 }
 
 # Formating dates in charts
@@ -70,17 +70,23 @@ def format_five_year_max(dt):
 for record in one_day:
     record['date'] = format_one_day(record['date'])
 
-# for record in five_day:
-#     record['date'] = format_five_day_one_month(record['date'])
+for record in five_day:
+    record['date'] = format_five_day_one_month(record['date'])
 
-# for record in one_month:
-#     record['date'] = format_five_day_one_month(record['date'])
+for record in one_month:
+    record['date'] = format_five_day_one_month(record['date'])
 
-# for record in five_year:
-#     record['date'] = format_five_year_max(record['date'])
+for record in six_month:
+    record['date'] = format_six_month_one_year(record['date'])
 
-# for record in max_chart:
-    # record['date'] = format_five_year_max(record['date'])
+for record in one_year:
+    record['date'] = format_six_month_one_year(record['date'])
+
+for record in five_year:
+    record['date'] = format_five_year_max(record['date'])
+
+for record in max_chart:
+    record['date'] = format_five_year_max(record['date'])
 
 def handle_datetime(obj):
     if isinstance(obj, pd.Timestamp):
