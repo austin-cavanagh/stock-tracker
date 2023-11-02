@@ -8,13 +8,22 @@
   border: none;
 }
 
-.window {
-  height: 100vh;
-  width: 100vw;
+body {
   background-color: #001f3f;
 }
 
+.window {
+  height: auto;
+  width: 100vw;
+}
+
+.slide-bar {
+  z-index: 10;
+}
+
 .nav-bar {
+  position: fixed;
+  height: 6rem;
   width: 100%;
   background-color: white;
   display: flex;
@@ -35,6 +44,17 @@
   align-items: center;
 }
 
+.content {
+  height: auto;
+  width: 100%;
+  background-color: #001f3f;
+  padding: 8rem 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .bull-icon {
   width: 5.5rem;
   height: 4rem;
@@ -45,7 +65,7 @@
 }
 
 .company {
-  font-size: 40pt;
+  font-size: 3.5rem;
   color: #001f3f;
   font-weight: bold;
   font-family: 'Raleway', sans-serif;
@@ -110,4 +130,46 @@
   background-color: #001f3f;
   margin: 0 10px;
   border-radius: 25pt;
+}
+
+.test {
+  height: 100px;
+  width: 100px;
+  background-color: blue;
+}
+
+.financial-statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.financial-statement-title {
+  color: white;
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  font-size: 3rem;
+  padding: 1rem;
+}
+
+.financial-statement-table {
+  color: #001f3f;
+  background-color: white;
+}
+
+.financial-statement-table .asOfDate-row {
+  font-weight: bold;
+}
+
+.financial-statement-table td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: right;
+}
+
+.financial-statement-table .left-column {
+  font-weight: bold;
+  text-align: left;
 }

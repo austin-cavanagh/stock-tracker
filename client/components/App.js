@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import bullIcon from '../assets/bull-icon.png';
 import searchIcon from '../assets/search-icon.png';
+import IncomeStatement from './incomeStatement.js';
+import BalanceSheet from './BalanceSheet';
+import CashFlowStatement from './CashFlowStatement';
 
 const App = () => {
   const [tickerData, setTickerData] = useState();
@@ -13,11 +16,14 @@ const App = () => {
       const response = await fetch(`/api/fetch-data?query=${ticker}`);
       const data = await response.json();
 
-      console.log(data);
+      setTickerData(data);
     } catch (error) {
       console.error('Error Fetching Data:', error);
     }
   };
+
+  console.log(tickerData);
+  // if (tickerData) console.log(tickerData.incomeStatement);
 
   return (
     <>
@@ -54,8 +60,19 @@ const App = () => {
             </div>
           </div>
         </nav>
+
+        <div className="content">
+          {tickerData && tickerData.incomeStatement && (
+            <IncomeStatement incomeStatement={tickerData.incomeStatement} />
+          )}
+          {tickerData && tickerData.balanceSheet && (
+            <BalanceSheet balanceSheet={tickerData.balanceSheet} />
+          )}
+          {tickerData && tickerData.cashFlowStatement && (
+            <CashFlowStatement balanceSheet={tickerData.cashFlowStatement} />
+          )}
+        </div>
       </div>
-      ;
     </>
   );
 };
