@@ -1,8 +1,21 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import formatTable from '../scripts/formatTable';
 
 export const BalanceSheet = ({ balanceSheet }) => {
-  const { columns, data } = balanceSheet;
+  const [columns, setColumns] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (balanceSheet) {
+      setColumns(balanceSheet.columns);
+      setData(balanceSheet.data);
+    }
+  }, [balanceSheet]);
+
+  if (!columns.length || !data.length) {
+    return <div>Loading Balance Sheet...</div>;
+  }
 
   return (
     <>

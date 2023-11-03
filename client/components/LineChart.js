@@ -61,6 +61,10 @@ const LineChart = ({ chartData }) => {
         grid: {
           display: false,
         },
+        border: {
+          width: 1,
+          color: 'white',
+        },
       },
       x: {
         grid: {
@@ -73,6 +77,10 @@ const LineChart = ({ chartData }) => {
           font: {
             size: 15,
           },
+        },
+        border: {
+          width: 1,
+          color: 'white',
         },
       },
       maintainAspectRatio: false,

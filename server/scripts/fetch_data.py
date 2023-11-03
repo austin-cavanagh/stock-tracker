@@ -5,25 +5,29 @@ import json
 import datetime
 
 ticker_symbol = sys.argv[1]
+# ticker_symbol = 'AAPL'
+
 
 # Initialize the Ticker object with the dynamic ticker_symbol
 ticker = Ticker(ticker_symbol)
 
 # Fetching company asset profile
-# company_profile = ticker.asset_profile[ticker_symbol]
+company_profile = ticker.asset_profile[ticker_symbol]
+# summary_profile = ticker.summary_profile
+company_info = ticker.price
 
 # Fetching financial statements
-# income_statement_df = ticker.income_statement()
-# income_statement_df.fillna(0, inplace=True)
-# income_statement = income_statement_df.to_dict(orient='split')
+income_statement_df = ticker.income_statement()
+income_statement_df.fillna(0, inplace=True)
+income_statement = income_statement_df.to_dict(orient='split')
 
-# cash_flow_statement_df = ticker.cash_flow()
-# cash_flow_statement_df.fillna(0, inplace=True)
-# cash_flow_statement = cash_flow_statement_df.to_dict(orient='split')
+cash_flow_statement_df = ticker.cash_flow()
+cash_flow_statement_df.fillna(0, inplace=True)
+cash_flow_statement = cash_flow_statement_df.to_dict(orient='split')
 
-# balance_sheet_df = ticker.cash_flow()
-# balance_sheet_df.fillna(0, inplace=True)
-# balance_sheet = balance_sheet_df.to_dict(orient='split')
+balance_sheet_df = ticker.balance_sheet()
+balance_sheet_df.fillna(0, inplace=True)
+balance_sheet = balance_sheet_df.to_dict(orient='split')
 
 # Fetching institutional ownership data
 # institutional_holders = ticker.institution_ownership.to_dict(orient='split')
@@ -40,10 +44,12 @@ max_chart = ticker.history(period='max', interval='1wk').reset_index().to_dict(o
 
 # Consolidate all dictionaries into one
 combined_data = {
-    # 'companyProfile': company_profile,
-    # 'incomeStatement': income_statement,
-    # 'cashFlowStatement': cash_flow_statement, 
-    # 'balanceSheet': balance_sheet,
+    'companyProfile': company_profile,
+    # 'summaryProfile': summary_profile, NOT USING
+    'companyInfo': company_info,
+    'incomeStatement': income_statement,
+    'cashFlowStatement': cash_flow_statement, 
+    'balanceSheet': balance_sheet,
     # 'institutionalHolders': institutional_holders,
     'oneDayChart': one_day,
     'fiveDayChart': five_day,

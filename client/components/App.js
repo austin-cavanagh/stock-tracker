@@ -5,6 +5,7 @@ import IncomeStatement from './incomeStatement.js';
 import BalanceSheet from './BalanceSheet';
 import CashFlowStatement from './CashFlowStatement';
 import LineChart from './LineChart';
+import CompanyInfo from './CompanyProfile';
 
 const chartTypes = {
   '1D': 'oneDayChart',
@@ -29,16 +30,15 @@ const chartTitle = {
 const App = () => {
   const [tickerData, setTickerData] = useState();
   const [chartType, setChartType] = useState('oneDayChart');
-
-  // useEffect(() => {
-
-  // }, [chartType]);
+  const [ticker, setTicker] = useState();
+  const [windowType, setWindowType] = useState();
 
   const getTickerData = async event => {
     event.preventDefault();
 
     try {
       const ticker = event.target.query.value;
+      setTicker(ticker);
       const response = await fetch(`/api/fetch-data?query=${ticker}`);
       const data = await response.json();
 
@@ -48,7 +48,7 @@ const App = () => {
     }
   };
 
-  console.log(chartType);
+  console.log(windowType);
 
   return (
     <>
@@ -69,7 +69,7 @@ const App = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Ticker"
+                placeholder="Ticker..."
                 name="query"
               />
             </form>
@@ -87,20 +87,60 @@ const App = () => {
         </nav>
 
         <div className="content">
-          {/* {tickerData && tickerData.incomeStatement && (
-            <IncomeStatement incomeStatement={tickerData.incomeStatement} />
-          )}
-          {tickerData && tickerData.balanceSheet && (
-            <BalanceSheet balanceSheet={tickerData.balanceSheet} />
-          )}
-          {tickerData && tickerData.cashFlowStatement && (
-            <CashFlowStatement balanceSheet={tickerData.cashFlowStatement} />
-          )} */}
-
-          {tickerData && tickerData.maxChart && (
+          {tickerData && (
             <>
-              <h2 className="financial-statement-title">Price History</h2>
+              <CompanyInfo
+                companyProfileData={tickerData.companyProfile}
+                companyInfo={tickerData.companyInfo[ticker]}
+              />
 
+              <div className="chart-selector">
+                <div
+                  className={`chart-type ${
+                    windowType === 'incomeStatement' ? 'selected' : ''
+                  }`}
+                  onClick={() => setWindowType('incomeStatement')}
+                >
+                  Income Statement
+                </div>
+                <div
+                  className={`chart-type ${
+                    windowType === 'balanceSheet' ? 'selected' : ''
+                  }`}
+                  onClick={() => setWindowType('balanceSheet')}
+                >
+                  Balance Sheet
+                </div>
+                <div
+                  className={`chart-type ${
+                    windowType === 'cashFlowStatement' ? 'selected' : ''
+                  }`}
+                  onClick={() => setWindowType('cashFlowStatement')}
+                >
+                  Cash Flow Statement
+                </div>
+                <div
+                  className={`chart-type ${
+                    windowType === 'priceHistory' ? 'selected' : ''
+                  }`}
+                  onClick={() => setWindowType('priceHistory')}
+                >
+                  Price History
+                </div>
+              </div>
+
+              {windowType === 'incomeStatement' && (
+                <>
+                  {' '}
+                  {tickerData && tickerData.incomeStatement && (
+                    <IncomeStatement
+                      incomeStatement={tickerData.incomeStatement}
+                    />
+                  )}
+                </>
+              )}
+
+              <h2 className="financial-statement-title">Price History</h2>
               <LineChart chartData={tickerData[chartType]} />
               <div className="chart-selector">
                 <div
@@ -160,6 +200,15 @@ const App = () => {
                   Max
                 </div>
               </div>
+
+              {tickerData && tickerData.balanceSheet && (
+                <BalanceSheet balanceSheet={tickerData.balanceSheet} />
+              )}
+              {tickerData && tickerData.cashFlowStatement && (
+                <CashFlowStatement
+                  cashFlowStatementData={tickerData.cashFlowStatement}
+                />
+              )}
             </>
           )}
         </div>

@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import formatTable from '../scripts/formatTable';
 
 const IncomeStatement = ({ incomeStatement }) => {
-  const { columns, data } = incomeStatement;
+  const [columns, setColumns] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setColumns([]);
+    setData([]);
+
+    if (incomeStatement) {
+      setColumns(incomeStatement.columns);
+      setData(incomeStatement.data);
+    }
+  }, [incomeStatement]);
+
+  if (!columns.length || !data.length) {
+    return <div>Loading Income Statement...</div>;
+  }
 
   return (
     <>
@@ -12,12 +27,12 @@ const IncomeStatement = ({ incomeStatement }) => {
           <tbody>
             {columns.map((columnName, columnIndex) => (
               <tr
-                key={columnName}
+                key={crypto.randomUUID()}
                 className={columnName === 'asOfDate' ? 'asOfDate-row' : ''}
               >
                 <td className="left-column">{columnName}</td>
                 {data.map(rowData => (
-                  <td key={rowData[columnIndex]}>
+                  <td key={crypto.randomUUID()}>
                     {formatTable(rowData[columnIndex], columnName)}
                   </td>
                 ))}

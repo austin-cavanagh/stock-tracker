@@ -1,9 +1,21 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import formatTable from '../scripts/formatTable';
 
-export const CashFlowStatement = ({ balanceSheet }) => {
-  const { columns, data } = balanceSheet;
-  console.log(balanceSheet);
+export const CashFlowStatement = ({ cashFlowStatementData }) => {
+  const [columns, setColumns] = useState([]);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (cashFlowStatementData) {
+      setColumns(cashFlowStatementData.columns || []);
+      setData(cashFlowStatementData.data || []);
+    }
+  }, [cashFlowStatementData]);
+
+  if (!columns.length || !data.length) {
+    return <div>Loading Cash Flow Statement...</div>;
+  }
 
   return (
     <>
